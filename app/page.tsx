@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaBell } from 'react-icons/fa';
 import { Line, Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
+import Inbox from '@/components/NotificationsInbox';
 
 export default function Home() {
   // Example Data
@@ -43,6 +43,12 @@ export default function Home() {
   ];
 
   const filteredData = tableData.filter(item => filter === 'all' || item.category === filter);
+
+  // Notifications Inbox States
+  const [showInbox, setShowInbox] = useState<boolean>(false);
+
+  // Toggle Inbox visibility
+  const toggleInbox = () => setShowInbox(!showInbox);
 
   return (
     <div className='flex flex-col h-screen overflow-hidden'>
@@ -91,8 +97,13 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className='flex items-center gap-4'>
-            <FaBell className='text-white text-2xl cursor-pointer hover:text-cyan-300 transition-colors duration-200' />
+          <div className='relative flex items-center gap-4'>
+            <button 
+              onClick={toggleInbox}
+              className='text-white text-2xl cursor-pointer hover:text-cyan-300 transition-colors duration-200'
+            >
+              <Inbox />
+            </button>
             <button className='bg-gradient-to-r from-blue-800 to-blue-600 text-white rounded-md px-4 py-2 hover:from-blue-700 hover:to-blue-500 transition-colors duration-200'>
               Sign in
             </button>
